@@ -14,6 +14,12 @@ RUN apt-get update \
         sudo \
         git \
         jq \
+        apt-transport-https \
+        ca-certificates \
+        curl \
+        gnupg2 \
+        software-properties-common \
+        docker-ce \
         iputils-ping \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
@@ -23,6 +29,12 @@ RUN apt-get update \
 
 USER github
 WORKDIR /home/github
+
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+
+RUN apt-get update
+RUN docker run -v /var/run/docker.sock:/var/run/docker.sock
 
 RUN GITHUB_RUNNER_VERSION=$(curl --silent "https://api.github.com/repos/actions/runner/releases/latest" | jq -r '.tag_name[1:]') \
     && curl -Ls https://github.com/actions/runner/releases/download/v${GITHUB_RUNNER_VERSION}/actions-runner-linux-x64-${GITHUB_RUNNER_VERSION}.tar.gz | tar xz \
