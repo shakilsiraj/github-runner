@@ -24,7 +24,7 @@ RUN apt-get update \
     && usermod -aG sudo github \
     && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-RUN docker -v
+RUN docker run -v /var/run/docker.sock:/var/run/docker.sock
 RUN node -v
 
 USER github
