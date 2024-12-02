@@ -16,7 +16,6 @@ RUN apt-get update \
     jq \
     software-properties-common \
     nodejs \
-    docker.io \
     iputils-ping \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
@@ -24,8 +23,12 @@ RUN apt-get update \
     && usermod -aG sudo github \
     && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-RUN docker -v /var/run/docker.sock:/var/run/docker.sock
-RUN node -v
+RUN curl -LO https://dl.k8s.io/release/v1.24.0/bin/linux/amd64/kubectl && install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+RUN curl -LO https://get.helm.sh/helm-v3.7.0-linux-amd64.tar.gz && \
+    tar -zxvf helm-v3.7.0-linux-amd64.tar.gz && \
+    mv linux-amd64/helm /usr/local/bin/helm && \
+    rm -rf helm-v3.7.0-linux-amd64.tar.gz linux-amd64
+RUN helm version
 
 USER github
 WORKDIR /home/github
