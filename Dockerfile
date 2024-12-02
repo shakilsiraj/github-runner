@@ -15,6 +15,7 @@ RUN apt-get update \
     git \
     jq \
     software-properties-common \
+    nodejs \
     docker.io \
     iputils-ping \
     && apt-get clean \
@@ -24,6 +25,7 @@ RUN apt-get update \
     && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 RUN docker -v
+RUN node -v
 
 USER github
 WORKDIR /home/github
