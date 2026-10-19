@@ -1,4 +1,4 @@
-FROM debian:buster-slim
+FROM debian:bookworm-slim
 
 ENV GITHUB_PAT ""
 ENV GITHUB_TOKEN ""
