@@ -16,12 +16,12 @@ RUN apt-get update \
     jq \
     software-properties-common \
     nodejs \
-    iputils-ping \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && useradd -m github \
-    && usermod -aG sudo github \
-    && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+    iputils-ping 
+RUN apt-get clean 
+RUN rm -rf /var/lib/apt/lists/* 
+RUN useradd -m github 
+RUN usermod -aG sudo github 
+RUN echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 RUN curl -LO https://dl.k8s.io/release/v1.24.0/bin/linux/amd64/kubectl && install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 RUN curl -LO https://get.helm.sh/helm-v3.7.0-linux-amd64.tar.gz && \
